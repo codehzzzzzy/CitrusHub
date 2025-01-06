@@ -63,7 +63,17 @@ public enum BusinessFailCode implements ResultCode {
     /**
      * 数据存入失败
      */
-    DATA_STORAGE_ERROR(3008, "数据存入失败");
+    DATA_STORAGE_ERROR(3008, "数据存入失败"),
+
+    /**
+     * 密码与确认密码不匹配
+     */
+    REGISTER_PASSWORD_ERROR(3009,"密码与确认密码不匹配"),
+
+    /**
+     * 旧密码错误
+     */
+    OLD_PASSWORD_ERROR(3010,"旧密码错误");
 
     /**
      * 编号
