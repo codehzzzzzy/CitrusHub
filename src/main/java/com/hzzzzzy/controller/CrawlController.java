@@ -1,10 +1,13 @@
 package com.hzzzzzy.controller;
 
+import com.hzzzzzy.model.dto.GetPriceRequest;
 import com.hzzzzzy.model.dto.SearchSupplyDemandRequest;
 import com.hzzzzzy.model.entity.PageResult;
 import com.hzzzzzy.model.entity.Result;
+import com.hzzzzzy.model.vo.PriceVO;
 import com.hzzzzzy.model.vo.SupplyDemandVO;
 import com.hzzzzzy.service.CitrusSupplyDemandService;
+import com.hzzzzzy.service.CrawlService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -19,19 +22,21 @@ import java.util.List;
  * @date 2025/1/8
  * @description SupplyDemandController
  */
-@Api(value = "供需信息管理", tags = "供需信息管理")
+@Api(value = "爬虫信息管理", tags = "爬虫信息管理")
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
-@RequestMapping("/supplyDemand")
-public class SupplyDemandController {
+@RequestMapping("/crawl")
+public class CrawlController {
 
     @Autowired
     private CitrusSupplyDemandService supplyDemandService;
 
+    private final CrawlService crawlService;
+
     @ApiOperation(value = "查看供需信息", tags = "供需信息管理")
-    @PostMapping("search")
-    public Result search(
+    @PostMapping("searchSupplyDemand")
+    public Result searchSupplyDemand(
             @RequestBody
             @NotEmpty
             SearchSupplyDemandRequest request,
@@ -45,4 +50,15 @@ public class SupplyDemandController {
         PageResult<SupplyDemandVO> voList = supplyDemandService.search(request, current, pageSize);
         return new Result<>().success().message("查看成功").data(voList);
     }
+
+    @ApiOperation(value = "获取价格信息", tags = "爬虫信息管理")
+    @PostMapping("getPrice")
+    public Result getPrice(
+            @RequestBody
+            GetPriceRequest request
+    ) {
+        List<PriceVO> voList = crawlService.getPrice(request);
+        return new Result<>().success().message("获取成功").data(voList);
+    }
+
 }

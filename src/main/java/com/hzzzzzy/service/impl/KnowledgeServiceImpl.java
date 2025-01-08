@@ -1,6 +1,7 @@
 package com.hzzzzzy.service.impl;
 
 import com.hzzzzzy.model.dto.AddCategoryRequest;
+import com.hzzzzzy.model.entity.KnowledgeCategory;
 import com.hzzzzzy.service.KnowledgeBaseService;
 import com.hzzzzzy.service.KnowledgeCategoryService;
 import com.hzzzzzy.service.KnowledgeService;
@@ -26,7 +27,10 @@ public class KnowledgeServiceImpl implements KnowledgeService {
     private KnowledgeCategoryService knowledgeCategoryService;
 
     @Override
-    public void addCategory(AddCategoryRequest addCategoryRequest) {
-
+    public void addCategory(AddCategoryRequest request) {
+        KnowledgeCategory category = new KnowledgeCategory();
+        category.setCategoryName(request.getCategoryName());
+        category.setDescription(request.getDescription());
+        knowledgeCategoryService.save(category);
     }
 }

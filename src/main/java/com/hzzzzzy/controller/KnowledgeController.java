@@ -31,6 +31,6 @@ public class KnowledgeController {
             AddCategoryRequest addCategoryRequest
     ) {
         knowledgeService.addCategory(addCategoryRequest);
-        return new Result<>().success().message("注册成功");
+        return new Result<>().success().message("创建分类成功");
     }
 }
