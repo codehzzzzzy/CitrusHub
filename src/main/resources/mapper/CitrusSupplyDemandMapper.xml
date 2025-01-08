@@ -6,15 +6,18 @@
 
     <resultMap id="BaseResultMap" type="com.hzzzzzy.model.entity.CitrusSupplyDemand">
             <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
             <result property="type" column="type" jdbcType="VARCHAR"/>
             <result property="category" column="category" jdbcType="VARCHAR"/>
             <result property="region" column="region" jdbcType="VARCHAR"/>
             <result property="releaseDate" column="release_date" jdbcType="VARCHAR"/>
-            <result property="requireTime" column="require_time" jdbcType="VARCHAR"/>
+            <result property="requireTimePre" column="require_time_pre" jdbcType="INTEGER"/>
+            <result property="requireTimeAfter" column="require_time_after" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,type,category,
-        region,release_date,require_time
+        id,title,type,category,
+        region,release_date,require_time_pre,require_time_after,create_time
     </sql>
 </mapper>

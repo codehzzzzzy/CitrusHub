@@ -38,11 +38,13 @@ CREATE TABLE knowledge_category (
 -- 供需信息
 CREATE TABLE citrus_supply_demand (
     id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '供需信息id',
+    title           varchar(255)                                NOT NULL    COMMENT '标题',
     `type`          varchar(255)                                NOT NULL    COMMENT '供应/求购',
     category        varchar(255)                                NOT NULL    COMMENT '柑橘种类',
     region          varchar(255)                                NOT NULL    COMMENT '地区',
     release_date    varchar(255)                                NOT NULL    COMMENT '发布日期 mm-dd',
-    require_time    varchar(255)                                NOT NULL    COMMENT '需求日期 mm月-mm月'
+    require_time_pre    int                                     NOT NULL    COMMENT '需求日期-前',
+    require_time_after  int                                     NOT NULL    COMMENT '需求日期-后'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='供需信息表';
 
 -- 价格信息

@@ -21,4 +21,14 @@ public interface CommonConstant {
      * 请求中的token
      */
     String HEADER_TOKEN = "authorization";
+
+    /**
+     * 需求
+     */
+    String DEMAND = "求购";
+
+    /**
+     * 供应
+     */
+    String SUPPLY = "供应";
 }

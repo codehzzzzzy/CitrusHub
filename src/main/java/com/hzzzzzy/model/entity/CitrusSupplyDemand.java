@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 
 /**
@@ -19,6 +21,11 @@ public class CitrusSupplyDemand implements Serializable {
      */
     @TableId(type = IdType.AUTO)
     private Integer id;
+
+    /**
+     * 标题
+     */
+    private String title;
 
     /**
      * 供应/求购
@@ -41,9 +48,19 @@ public class CitrusSupplyDemand implements Serializable {
     private String releaseDate;
 
     /**
-     * 需求日期 mm月-mm月
+     * 需求日期-前
      */
-    private String requireTime;
+    private Integer requireTimePre;
+
+    /**
+     * 需求日期-后
+     */
+    private Integer requireTimeAfter;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

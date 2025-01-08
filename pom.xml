@@ -24,6 +24,8 @@
         <slf4j.version>1.7.30</slf4j.version>
         <aop.version>2.4.5</aop.version>
         <jwt.version>4.2.1</jwt.version>
+        <htmlunit.version>2.49.1</htmlunit.version>
+        <jsoup.version>1.15.3</jsoup.version>
     </properties>
 
     <parent>
@@ -108,6 +110,24 @@
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>${jwt.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.htmlunit</groupId>
+            <artifactId>htmlunit</artifactId>
+            <version>${htmlunit.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+            <version>${websocket.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
         </dependency>
     </dependencies>
 

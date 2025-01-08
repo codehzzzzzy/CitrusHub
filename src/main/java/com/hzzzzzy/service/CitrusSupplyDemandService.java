@@ -1,7 +1,10 @@
 package com.hzzzzzy.service;
 
+import com.hzzzzzy.model.dto.SearchSupplyDemandRequest;
 import com.hzzzzzy.model.entity.CitrusSupplyDemand;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hzzzzzy.model.entity.PageResult;
+import com.hzzzzzy.model.vo.SupplyDemandVO;
 
 /**
 * @author hzzzzzy
@@ -10,4 +13,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface CitrusSupplyDemandService extends IService<CitrusSupplyDemand> {
 
+    /**
+     * 搜索供需信息
+     * @param request 请求
+     * @param current
+     * @param pageSize
+     * @return
+     */
+    PageResult<SupplyDemandVO> search(SearchSupplyDemandRequest request, Integer current, Integer pageSize);
 }
