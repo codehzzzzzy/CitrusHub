@@ -1,26 +1,16 @@
-package com.hzzzzzy.service.impl;
-
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.hzzzzzy.constant.BusinessFailCode;
 import com.hzzzzzy.exception.GlobalException;
-import com.hzzzzzy.mapper.CitrusChatMapper;
-import com.hzzzzzy.model.dto.GetPriceRequest;
 import com.hzzzzzy.model.entity.Result;
 import com.hzzzzzy.model.vo.PriceVO;
-import com.hzzzzzy.service.CrawlService;
-import com.hzzzzzy.service.KnowledgeCategoryService;
 import com.hzzzzzy.utils.WebClientUtils;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +20,8 @@ import java.util.List;
  * @date 2025/1/8
  * @description
  */
-@Service
-@RequiredArgsConstructor
 @Slf4j
-public class CrawlServiceImpl implements CrawlService {
+public class crawl {
 
     private static final String BaseUrl = "https://www.cnhnb.com/hangqing/cdlist-2001686-0-0-0-0-1/";
 
@@ -50,31 +38,34 @@ public class CrawlServiceImpl implements CrawlService {
         return null;
     }
 
-    @Override
-    public List<PriceVO> getPrice(GetPriceRequest request) {
-        String region = request.getRegion();
-        String category = request.getCategory();
-        Integer current = request.getCurrent();
+    public static void main(String[] args) {
+
+        String region = "广东";
+        String category = "";
+//        String category = "耙耙柑";
+        Integer current = 2;
+
         List<PriceVO> voList = new ArrayList<>();
         WebClient webClient = WebClientUtils.getWebClient();
         HtmlPage page;
         try {
+            // 获取页面
             page = webClient.getPage(BaseUrl);
-            // 地区不为空
+            // region 不为空
             if (region != null && !region.isEmpty()) {
                 HtmlAnchor anchor = findAnchorByRegion(page, region);
                 if (anchor != null) {
+                    // 跳转到目标页面
                     page = anchor.click();
                 }
             }
-            // 种类不为空
             if (category != null && !category.isEmpty()) {
                 HtmlAnchor anchor = findAnchorByRegion(page, category);
                 if (anchor != null) {
+                    // 跳转到目标页面
                     page = anchor.click();
                 }
             }
-            // 页数不为空
             if (current != null) {
                 String url = replaceLastNumber(page.getUrl().toString(), String.valueOf(current));
                 page = webClient.getPage(url);
@@ -87,9 +78,7 @@ public class CrawlServiceImpl implements CrawlService {
         try {
             Document document = Jsoup.parse(page.asXml());
             Elements listItems = document.select("li.market-list-item");
-            if (listItems.isEmpty()) {
-                return null;
-            }
+
             for (Element listItem : listItems) {
                 Element date = listItem.select("span.time").first();
                 Element categoryElement = listItem.select("span.product").first();
@@ -113,7 +102,9 @@ public class CrawlServiceImpl implements CrawlService {
             // 确保释放资源
             webClient.close();
             log.info("WebClient 已关闭");
+            for (PriceVO vo : voList) {
+                System.out.println(vo);
+            }
         }
-        return voList;
     }
 }

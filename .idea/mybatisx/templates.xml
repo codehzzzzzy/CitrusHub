@@ -68,28 +68,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="CitrusConsultation" />
-                  <option name="tableName" value="citrus_consultation" />
-                </TableUIInfo>
-                <TableUIInfo>
-                  <option name="className" value="CitrusPrice" />
-                  <option name="tableName" value="citrus_price" />
-                </TableUIInfo>
-                <TableUIInfo>
-                  <option name="className" value="CitrusSupplyDemand" />
-                  <option name="tableName" value="citrus_supply_demand" />
-                </TableUIInfo>
-                <TableUIInfo>
-                  <option name="className" value="KnowledgeBase" />
-                  <option name="tableName" value="knowledge_base" />
-                </TableUIInfo>
-                <TableUIInfo>
-                  <option name="className" value="KnowledgeCategory" />
-                  <option name="tableName" value="knowledge_category" />
-                </TableUIInfo>
-                <TableUIInfo>
-                  <option name="className" value="User" />
-                  <option name="tableName" value="user" />
+                  <option name="className" value="CitrusChat" />
+                  <option name="tableName" value="citrus_chat" />
                 </TableUIInfo>
               </list>
             </option>

@@ -47,18 +47,17 @@ CREATE TABLE citrus_supply_demand (
     require_time_after  int                                     NOT NULL    COMMENT '需求日期-后'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='供需信息表';
 
--- 价格信息
-CREATE TABLE citrus_price (
-    id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '价格信息id',
-    create_time     datetime                                    NOT NULL    COMMENT '时间 yyyy-dd-mm',
-    category        varchar(255)                                NOT NULL    COMMENT '柑橘种类',
-    region          varchar(255)                                NOT NULL    COMMENT '地区',
-    price           varchar(255)                                NOT NULL    COMMENT '价格'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='价格信息表';
-
 -- 资讯信息
 CREATE TABLE citrus_consultation (
     id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '资讯信息id',
     title           varchar(255)                                NOT NULL    COMMENT '标题',
     context         varchar(255)                                NOT NULL    COMMENT '内容'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='资讯信息表';
+
+-- 对话信息表
+CREATE TABLE citrus_chat (
+    id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '对话id',
+    user_id         int                                         NOT NULL    COMMENT '用户id',
+    `name`          varchar(255)                                NOT NULL    COMMENT '对话名称',
+    thread_slug     varchar(255)                                NOT NULL    COMMENT '对话标识'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='对话信息表';
