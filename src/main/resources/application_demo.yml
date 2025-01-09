@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: CitrusHub
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://xxx:3306/citrus_hub
+    username: xxx
+    password: xxx
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  session:
+    timeout: 86400
+  websocket:
+    prefix: /websocket
+  redis:
+    port: xxx
+    host: xxx
+    database: 0
+    password: xxx
+server:
+  port: xxx
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDeleted # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+    #字段策略 0:"忽略判断",1:"非 NULL 判断",2:"非空判断"
+    field-strategy: 0
+llm:
+  mode: query
+  workSpace: xxx
+  baseURL: http://localhost:3001/api/v1/workspace/
+  authorization: xxx
