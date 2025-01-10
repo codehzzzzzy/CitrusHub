@@ -107,8 +107,15 @@
 
 ## 项目截图
 
-![image-20250109173926274](https://hzzzzzy-typora.oss-cn-guangzhou.aliyuncs.com/images/image-20250109173926274.png)
+<img src="https://hzzzzzy-typora.oss-cn-guangzhou.aliyuncs.com/images/image-20250109173926274.png" alt="image-20250109173926274" style="zoom:67%;" />
 
-![image-20250109174005511](https://hzzzzzy-typora.oss-cn-guangzhou.aliyuncs.com/images/image-20250109174005511.png)
+<img src="https://hzzzzzy-typora.oss-cn-guangzhou.aliyuncs.com/images/image-20250109174005511.png" alt="image-20250109174005511" style="zoom:67%;" />
 
 ![image-20250109174107764](https://hzzzzzy-typora.oss-cn-guangzhou.aliyuncs.com/images/image-20250109174107764.png)
+
+<img src="https://hzzzzzy-typora.oss-cn-guangzhou.aliyuncs.com/images/image-20250110151724289.png" alt="image-20250110151724289" style="zoom:67%;" />
+
+<img src="https://hzzzzzy-typora.oss-cn-guangzhou.aliyuncs.com/images/image-20250110151739684.png" alt="image-20250110151739684" style="zoom:67%;" />
+
+<img src="https://hzzzzzy-typora.oss-cn-guangzhou.aliyuncs.com/images/image-20250110151754087.png" alt="image-20250110151754087" style="zoom:67%;" />
+
