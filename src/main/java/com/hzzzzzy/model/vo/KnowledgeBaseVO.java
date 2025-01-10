@@ -14,9 +14,6 @@ import java.util.Date;
 @Data
 public class KnowledgeBaseVO {
 
-    @ApiModelProperty("时间")
-    private String date;
-
     @ApiModelProperty("标题")
     private String title;
 

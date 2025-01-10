@@ -1,17 +1,14 @@
 package com.hzzzzzy.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.hzzzzzy.constant.BusinessFailCode;
 import com.hzzzzzy.exception.GlobalException;
-import com.hzzzzzy.mapper.CitrusChatMapper;
 import com.hzzzzzy.model.dto.GetPriceRequest;
 import com.hzzzzzy.model.entity.Result;
 import com.hzzzzzy.model.vo.PriceVO;
 import com.hzzzzzy.service.CrawlService;
-import com.hzzzzzy.service.KnowledgeCategoryService;
 import com.hzzzzzy.utils.WebClientUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +17,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

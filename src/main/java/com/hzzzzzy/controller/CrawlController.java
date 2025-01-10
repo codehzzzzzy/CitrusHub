@@ -34,7 +34,7 @@ public class CrawlController {
 
     private final CrawlService crawlService;
 
-    @ApiOperation(value = "查看供需信息", tags = "供需信息管理")
+    @ApiOperation(value = "查看供需信息", tags = "爬虫信息管理")
     @PostMapping("searchSupplyDemand")
     public Result searchSupplyDemand(
             @RequestBody

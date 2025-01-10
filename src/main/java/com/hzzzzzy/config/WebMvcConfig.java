@@ -47,6 +47,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                         "/webjars/**",
                         "/swagger-ui/**",
                         "/js/**",
+                        "/websocket/**",
                         "/swagger-ui.html/**",
                         "/doc.html"
                 ).order(1);

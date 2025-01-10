@@ -22,7 +22,7 @@ CREATE TABLE knowledge_base (
     id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '知识库id',
     category_id     int                                                     COMMENT '分类id',
     title           varchar(255)                                NOT NULL    COMMENT '标题',
-    context         varchar(255)                                NOT NULL    COMMENT '内容',
+    context         TEXT                                        NOT NULL    COMMENT '内容',
     create_time     datetime        default CURRENT_TIMESTAMP   NOT NULL    COMMENT '创建时间',
     update_time     datetime        default CURRENT_TIMESTAMP   NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     is_deleted      tinyint         default 0                   NOT NULL    COMMENT '是否删除（0:不删除;1:删除）'

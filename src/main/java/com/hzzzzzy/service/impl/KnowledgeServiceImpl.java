@@ -1,5 +1,6 @@
 package com.hzzzzzy.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.hzzzzzy.model.dto.AddCategoryRequest;
 import com.hzzzzzy.model.dto.AddknowledgeRequest;
 import com.hzzzzzy.model.entity.KnowledgeBase;
@@ -62,7 +63,7 @@ public class KnowledgeServiceImpl implements KnowledgeService {
 
     @Override
     public PageResult<KnowledgeBaseVO> getKnowledge(Integer categoryId, Integer current, Integer pageSize) {
-        List<KnowledgeBase> entityList = knowledgeBaseService.list(knowledgeBaseService.lambdaQuery().eq(KnowledgeBase::getCategoryId, categoryId));
+        List<KnowledgeBase> entityList = knowledgeBaseService.list(new LambdaQueryWrapper<KnowledgeBase>().eq(KnowledgeBase::getCategoryId, categoryId));
         if (entityList.isEmpty()){
             return null;
         }

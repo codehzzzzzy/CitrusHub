@@ -16,4 +16,9 @@ public interface RedisConstant {
      * 用户登录token过期时间
      */
     Integer USER_LOGIN_TOKEN_EXPIRE = 60 * 60 * 24 * 7;
+
+    /**
+     * 聊天历史记录key前缀
+     */
+    String CHAT_HISTORY_PREFIX = "chat:history:";
 }

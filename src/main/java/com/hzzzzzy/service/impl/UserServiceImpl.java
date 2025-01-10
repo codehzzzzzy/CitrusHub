@@ -86,7 +86,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         queryWrapper.eq(User::getAccount, account).eq(User::getPassword, encryptPassword);
         User user = this.getOne(queryWrapper);
         if(BeanUtil.isEmpty(user)){
-            throw new GlobalException(new Result<>().error(BusinessFailCode.PARAMETER_ERROR).message("找不到对应用户"));
+            throw new GlobalException(new Result<>().error(BusinessFailCode.PARAMETER_ERROR).message("账户或密码错误"));
         }else {
             try {
                 token = JwtUtil.createToken(String.valueOf(user.getId()), user.getAccount());
