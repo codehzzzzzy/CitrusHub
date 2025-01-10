@@ -2,8 +2,11 @@ package com.hzzzzzy.service;
 
 import com.hzzzzzy.model.dto.UserAltMsgRequest;
 import com.hzzzzzy.model.dto.UserRegisterRequest;
+import com.hzzzzzy.model.entity.PageResult;
 import com.hzzzzzy.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hzzzzzy.model.vo.ExpertVO;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -49,4 +52,21 @@ public interface UserService extends IService<User> {
      * @param userAltMsgRequest
      */
     void alterMsg(HttpServletRequest request, UserAltMsgRequest userAltMsgRequest);
+
+    /**
+     * 获取用户信息
+     * @param request
+     * @return
+     */
+    User getUserInfo(HttpServletRequest request);
+
+    /**
+     * 获取所有专家信息
+     *
+     * @param expertise
+     * @param current
+     * @param pageSize
+     * @return
+     */
+    PageResult<ExpertVO> getExpertInfo(String expertise, Integer current, Integer pageSize);
 }

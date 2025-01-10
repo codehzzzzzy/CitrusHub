@@ -54,10 +54,10 @@ CREATE TABLE citrus_consultation (
     context         varchar(255)                                NOT NULL    COMMENT '内容'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='资讯信息表';
 
--- 对话信息表
+-- 大模型对话信息表
 CREATE TABLE citrus_chat (
     id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '对话id',
     user_id         int                                         NOT NULL    COMMENT '用户id',
     `name`          varchar(255)                                NOT NULL    COMMENT '对话名称',
     thread_slug     varchar(255)                                NOT NULL    COMMENT '对话标识'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='对话信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='大模型对话信息表';

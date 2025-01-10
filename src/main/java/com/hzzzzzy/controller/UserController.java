@@ -6,10 +6,14 @@ import com.hzzzzzy.model.dto.UserAddRequest;
 import com.hzzzzzy.model.dto.UserAltMsgRequest;
 import com.hzzzzzy.model.dto.UserAltPwdRequest;
 import com.hzzzzzy.model.dto.UserRegisterRequest;
+import com.hzzzzzy.model.entity.PageResult;
 import com.hzzzzzy.model.entity.Result;
+import com.hzzzzzy.model.entity.User;
+import com.hzzzzzy.model.vo.ExpertVO;
 import com.hzzzzzy.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -83,5 +87,29 @@ public class UserController {
     ){
         userService.alterMsg(request, userAltMsgRequest);
         return new Result<>().success().message("修改专家信息成功");
+    }
+
+    @ApiOperation(value = "获取用户信息", tags = "用户管理")
+    @GetMapping("/getUserInfo")
+    public Result getUserInfo(HttpServletRequest request){
+        User user = userService.getUserInfo(request);
+        return new Result<>().success().message("获取用户信息成功").data(user);
+    }
+
+    @ApiOperation(value = "获取所有专家信息", tags = "用户管理")
+    @GetMapping("/getExpertInfo")
+    public Result getExpertInfo(
+            @RequestParam(value = "expertise", required = false)
+            @Parameter(description = "专业领域（可空）")
+            String expertise,
+            @RequestParam("current")
+            @Parameter(description = "当前页")
+            Integer current,
+            @RequestParam("pageSize")
+            @Parameter(description = "页容量")
+            Integer pageSize
+    ){
+        PageResult<ExpertVO> result = userService.getExpertInfo(expertise, current, pageSize);
+        return new Result<>().success().message("获取专家信息成功").data(result);
     }
 }

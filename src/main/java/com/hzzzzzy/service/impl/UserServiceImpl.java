@@ -7,14 +7,19 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzzzzzy.constant.BusinessFailCode;
 import com.hzzzzzy.constant.RedisConstant;
+import com.hzzzzzy.constant.UserType;
 import com.hzzzzzy.exception.GlobalException;
 import com.hzzzzzy.model.dto.UserAltMsgRequest;
 import com.hzzzzzy.model.dto.UserRegisterRequest;
+import com.hzzzzzy.model.entity.PageResult;
 import com.hzzzzzy.model.entity.Result;
 import com.hzzzzzy.model.entity.User;
+import com.hzzzzzy.model.vo.ExpertVO;
 import com.hzzzzzy.service.UserService;
 import com.hzzzzzy.mapper.UserMapper;
 import com.hzzzzzy.utils.JwtUtil;
+import com.hzzzzzy.utils.ListUtil;
+import com.hzzzzzy.utils.PageUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -22,6 +27,7 @@ import org.springframework.util.DigestUtils;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import static com.hzzzzzy.constant.CommonConstant.HEADER_TOKEN;
 import static com.hzzzzzy.constant.RedisConstant.USER_LOGIN_TOKEN;
@@ -133,13 +139,39 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         String token = request.getHeader(HEADER_TOKEN);
         String jsonUser = stringRedisTemplate.opsForValue().get(RedisConstant.USER_LOGIN_TOKEN + token);
         User user = JSONUtil.toBean(jsonUser, User.class);
+        // 判断type
+        if (user.getType() != UserType.EXPERT.getValue()){
+            throw new GlobalException(new Result<>().error(BusinessFailCode.PARAMETER_ERROR).message("用户类型不支持，只支持专家修改信息"));
+        }
         user.setRemark(userAltMsgRequest.getRemark());
         user.setExpertise(userAltMsgRequest.getExpertise());
         this.updateById(user);
         stringRedisTemplate.opsForValue().set(RedisConstant.USER_LOGIN_TOKEN + token, JSONUtil.toJsonStr(user),USER_LOGIN_TOKEN_EXPIRE, TimeUnit.SECONDS);
     }
+
+    @Override
+    public User getUserInfo(HttpServletRequest request) {
+        String token = request.getHeader(HEADER_TOKEN);
+        String jsonUser = stringRedisTemplate.opsForValue().get(RedisConstant.USER_LOGIN_TOKEN + token);
+        User user = JSONUtil.toBean(jsonUser, User.class);
+        if(user == null){
+            throw new GlobalException(new Result<>().error(BusinessFailCode.PARAMETER_ERROR).message("token为空，获取用户信息失败"));
+        }
+        // 脱敏
+        user.setPassword("");
+        return user;
+    }
+
+    @Override
+    public PageResult<ExpertVO> getExpertInfo(String expertise, Integer current, Integer pageSize) {
+        List<User> userList = this.list(new LambdaQueryWrapper<User>()
+                .eq(User::getType, UserType.EXPERT.getValue())
+                .like(!StringUtils.isEmpty(expertise), User::getExpertise, expertise)
+        );
+        if (userList.isEmpty()){
+            return null;
+        }
+        List<ExpertVO> voList = ListUtil.entity2VO(userList, ExpertVO.class);
+        return PageUtil.getPage(voList, current, pageSize);
+    }
 }
-
-
-
-
