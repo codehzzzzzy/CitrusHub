@@ -7,6 +7,7 @@ import com.hzzzzzy.constant.BusinessFailCode;
 import com.hzzzzzy.exception.GlobalException;
 import com.hzzzzzy.model.dto.GetPriceRequest;
 import com.hzzzzzy.model.entity.Result;
+import com.hzzzzzy.model.vo.NewsVO;
 import com.hzzzzzy.model.vo.PriceVO;
 import com.hzzzzzy.service.CrawlService;
 import com.hzzzzzy.utils.WebClientUtils;
@@ -31,7 +32,9 @@ import java.util.List;
 @Slf4j
 public class CrawlServiceImpl implements CrawlService {
 
-    private static final String BaseUrl = "https://www.cnhnb.com/hangqing/cdlist-2001686-0-0-0-0-1/";
+    private static final String PRICE_BASE_URL = "https://www.cnhnb.com/hangqing/cdlist-2001686-0-0-0-0-1/";
+
+    private static final String NEWS_BASE_URL = "https://news.foodmate.net/search.php?moduleid=21&spread=0&kw=%E6%9F%91%E6%A9%98&page=";
 
     public static String replaceLastNumber(String input, String replacement) {
         return input.replaceAll("\\d+(?!.*\\d)", replacement);
@@ -55,7 +58,7 @@ public class CrawlServiceImpl implements CrawlService {
         WebClient webClient = WebClientUtils.getWebClient();
         HtmlPage page;
         try {
-            page = webClient.getPage(BaseUrl);
+            page = webClient.getPage(PRICE_BASE_URL);
             // 地区不为空
             if (region != null && !region.isEmpty()) {
                 HtmlAnchor anchor = findAnchorByRegion(page, region);
@@ -111,5 +114,46 @@ public class CrawlServiceImpl implements CrawlService {
             log.info("WebClient 已关闭");
         }
         return voList;
+    }
+
+    @Override
+    public List<NewsVO> getNews(Integer current) {
+        List<NewsVO> newsList = new ArrayList<>();
+        WebClient webClient = WebClientUtils.getWebClient();
+        HtmlPage page;
+        try {
+            page = webClient.getPage(NEWS_BASE_URL + current);
+        } catch (IOException e) {
+            log.error("获取新闻信息URL失败");
+            throw new GlobalException(new Result<>().error(BusinessFailCode.DATA_FETCH_ERROR).message("获取新闻信息URL失败"));
+        }
+        try {
+            Document document = Jsoup.parse(page.asXml());
+            Elements articles = document.select("li.catlist_li");
+
+            for (Element article : articles) {
+                NewsVO news = new NewsVO();
+                // 获取日期
+                Element dateElement = article.select("span.f_r").first();
+                if (dateElement != null) {
+                    news.setDate(dateElement.text());
+                }
+                // 获取标题与链接
+                Element titleElement = article.select("a").first();
+                if (titleElement != null) {
+                    news.setTitle(titleElement.text().replaceAll(" ", ""));
+                    news.setUrl(titleElement.attr("href"));
+                }
+                newsList.add(news);
+            }
+        } catch (Exception e) {
+            log.error("获取新闻信息页面失败", e);
+            throw new GlobalException(new Result<>().error(BusinessFailCode.DATA_FETCH_ERROR).message("获取新闻信息页面失败"));
+        } finally {
+            // 确保释放资源
+            webClient.close();
+            log.info("WebClient 已关闭");
+        }
+        return newsList;
     }
 }

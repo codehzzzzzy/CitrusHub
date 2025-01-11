@@ -4,6 +4,7 @@ import com.hzzzzzy.model.dto.GetPriceRequest;
 import com.hzzzzzy.model.dto.SearchSupplyDemandRequest;
 import com.hzzzzzy.model.entity.PageResult;
 import com.hzzzzzy.model.entity.Result;
+import com.hzzzzzy.model.vo.NewsVO;
 import com.hzzzzzy.model.vo.PriceVO;
 import com.hzzzzzy.model.vo.SupplyDemandVO;
 import com.hzzzzzy.service.CitrusSupplyDemandService;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,6 +61,17 @@ public class CrawlController {
     ) {
         List<PriceVO> voList = crawlService.getPrice(request);
         return new Result<>().success().message("获取成功").data(voList);
+    }
+
+    @ApiOperation(value = "获取新闻信息", tags = "爬虫信息管理")
+    @GetMapping("getNews/{current}")
+    public Result getNews(
+            @PathVariable("current")
+            @Parameter(description = "当前页")
+            Integer current
+    ) {
+        List<NewsVO> newsList = crawlService.getNews(current);
+        return new Result<>().success().message("获取成功").data(newsList);
     }
 
 }

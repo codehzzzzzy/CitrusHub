@@ -2,6 +2,7 @@ package com.hzzzzzy.service;
 
 
 import com.hzzzzzy.model.dto.GetPriceRequest;
+import com.hzzzzzy.model.vo.NewsVO;
 import com.hzzzzzy.model.vo.PriceVO;
 
 import java.util.List;
@@ -19,4 +20,11 @@ public interface CrawlService {
      * @return
      */
     List<PriceVO> getPrice(GetPriceRequest request);
+
+    /**
+     * 获取新闻信息
+     * @param current
+     * @return
+     */
+    List<NewsVO> getNews(Integer current);
 }

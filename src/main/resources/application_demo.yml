@@ -36,3 +36,8 @@ llm:
   workSpace: xxx
   baseURL: http://localhost:3001/api/v1/workspace/
   authorization: xxx
+oss:
+  accessKeyId: xxx
+  accessKeySecret: xxx
+  endpoint: oss-cn-xxx.aliyuncs.com
+  bucketName: xxx
