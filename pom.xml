@@ -26,6 +26,7 @@
         <jwt.version>4.2.1</jwt.version>
         <htmlunit.version>2.49.1</htmlunit.version>
         <jsoup.version>1.15.3</jsoup.version>
+        <oss.version>3.14.0</oss.version>
     </properties>
 
     <parent>
@@ -128,6 +129,12 @@
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>${jsoup.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>${oss.version}</version>
         </dependency>
     </dependencies>
 

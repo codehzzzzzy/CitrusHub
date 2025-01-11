@@ -14,11 +14,17 @@ import java.util.Date;
 @Data
 public class KnowledgeBaseVO {
 
+    @ApiModelProperty("知识库id")
+    private Integer id;
+
+    @ApiModelProperty("分类id")
+    private Integer categoryId;
+
     @ApiModelProperty("标题")
     private String title;
 
-    @ApiModelProperty("标题")
-    private String context;
+    @ApiModelProperty("url")
+    private String url;
 
     @ApiModelProperty("创建时间")
     @JsonFormat(pattern = "yyyy年MM月dd日 HH时mm分ss秒", timezone = "GMT+8")

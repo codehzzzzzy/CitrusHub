@@ -1,11 +1,12 @@
 package com.hzzzzzy.service;
 
 import com.hzzzzzy.model.dto.AddCategoryRequest;
-import com.hzzzzzy.model.dto.AddknowledgeRequest;
-import com.hzzzzzy.model.entity.KnowledgeBase;
+import com.hzzzzzy.model.dto.AddKnowledgeRequest;
+import com.hzzzzzy.model.dto.UploadKnowledgeRequest;
 import com.hzzzzzy.model.entity.KnowledgeCategory;
 import com.hzzzzzy.model.entity.PageResult;
 import com.hzzzzzy.model.vo.KnowledgeBaseVO;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
@@ -30,16 +31,16 @@ public interface KnowledgeService {
     List<KnowledgeCategory> getCategory();
 
     /**
-     * 创建知识库
+     * 创建/更新知识库
      * @param request
      */
-    void addKnowledge(@NotEmpty AddknowledgeRequest request);
+    void addKnowledge(@NotEmpty AddKnowledgeRequest request);
 
     /**
      * 更新知识库
      * @param entity
      */
-    void updateKnowledge(KnowledgeBase entity);
+    void updateKnowledge(@NotEmpty UploadKnowledgeRequest entity);
 
     /**
      * 获取知识库
@@ -49,4 +50,33 @@ public interface KnowledgeService {
      * @return
      */
     PageResult<KnowledgeBaseVO> getKnowledge(Integer categoryId, Integer current, Integer pageSize);
+
+    /**
+     * 上传md文件
+     * @param file
+     * @return
+     */
+    String upload(MultipartFile file);
+
+    /**
+     * 删除知识库
+     * @param id
+     */
+    void deleteKnowledge(Integer id);
+
+    /**
+     * 删除分类
+     * @param id
+     */
+    void deleteCategory(Integer id);
+
+    /**
+     * 搜索知识库
+     * @param categoryId
+     * @param keyword
+     * @param current
+     * @param pageSize
+     * @return
+     */
+    PageResult<KnowledgeBaseVO> searchKnowledge(Integer categoryId, String keyword, Integer current, Integer pageSize);
 }

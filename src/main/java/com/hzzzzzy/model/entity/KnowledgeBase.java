@@ -32,9 +32,9 @@ public class KnowledgeBase implements Serializable {
     private String title;
 
     /**
-     * 内容
+     * 链接url
      */
-    private String context;
+    private String url;
 
     /**
      * 创建时间

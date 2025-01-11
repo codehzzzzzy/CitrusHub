@@ -14,7 +14,7 @@ import javax.validation.constraints.NotEmpty;
 @Data
 @NoArgsConstructor
 @ApiModel("创建知识库请求")
-public class AddknowledgeRequest {
+public class AddKnowledgeRequest {
 
     @ApiModelProperty("分类id")
     @NotEmpty
@@ -24,7 +24,7 @@ public class AddknowledgeRequest {
     @NotEmpty
     private String title;
 
-    @ApiModelProperty("内容")
+    @ApiModelProperty("md链接")
     @NotEmpty
-    private String context;
+    private String url;
 }
