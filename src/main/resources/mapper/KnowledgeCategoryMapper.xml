@@ -8,9 +8,10 @@
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="categoryName" column="category_name" jdbcType="VARCHAR"/>
             <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="url" column="url" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,category_name,description
+        id,category_name,url,description
     </sql>
 </mapper>

@@ -32,6 +32,7 @@ CREATE TABLE knowledge_base (
 CREATE TABLE knowledge_category (
     id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '分类id',
     category_name   varchar(255)                                NOT NULL    COMMENT '分类名称',
+    url             varchar(255)                                NOT NULL    COMMENT '图片url',
     description     varchar(255)                                NOT NULL    COMMENT '分类描述'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='知识库分类表';
 

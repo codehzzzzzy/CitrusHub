@@ -44,11 +44,33 @@ public class KnowledgeController {
         return new Result<>().success().message("创建分类成功");
     }
 
+    @ApiOperation(value = "上传分类图片", tags = "知识库管理")
+    @PostMapping("uploadCategoryImage")
+    public Result uploadCategoryImage(
+            @RequestPart
+            @Parameter(description = "图片文件")
+            MultipartFile file
+    ) {
+        String url = knowledgeService.uploadCategoryImage(file);
+        return new Result<>().success().message("上传成功").data(url);
+    }
+
     @ApiOperation(value = "查看所有分类", tags = "知识库管理")
     @GetMapping("getCategory")
     public Result getCategory() {
         List<KnowledgeCategory> categoryList = knowledgeService.getCategory();
         return new Result<>().success().message("查看分类成功").data(categoryList);
+    }
+
+    @ApiOperation(value = "更新分类", tags = "知识库管理")
+    @PostMapping("updateCategory")
+    public Result updateCategory(
+            @RequestBody
+            @NotEmpty
+            KnowledgeCategory request
+    ) {
+        knowledgeService.updateCategory(request);
+        return new Result<>().success().message("更新成功");
     }
 
     @ApiOperation(value = "创建知识库", tags = "知识库管理")

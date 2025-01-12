@@ -54,6 +54,7 @@ public class KnowledgeServiceImpl implements KnowledgeService {
         KnowledgeCategory category = new KnowledgeCategory();
         category.setCategoryName(request.getCategoryName());
         category.setDescription(request.getDescription());
+        category.setUrl(request.getUrl());
         knowledgeCategoryService.save(category);
     }
 
@@ -137,5 +138,31 @@ public class KnowledgeServiceImpl implements KnowledgeService {
             return null;
         }
         return PageUtil.getPage(ListUtil.entity2VO(entityList, KnowledgeBaseVO.class), current, pageSize);
+    }
+
+    @Override
+    public String uploadCategoryImage(MultipartFile file) {
+        // 获取文件名称
+        String fileName = file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf(".")) + new Date().getTime() + ".jpg";
+        // 创建OSSClient实例
+        OSS ossClient = new OSSClientBuilder().build(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
+        try {
+            // 创建上传请求
+            PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET_NAME, fileName, file.getInputStream());
+            ossClient.putObject(putObjectRequest);
+            ossClient.setObjectAcl(BUCKET_NAME, fileName, CannedAccessControlList.PublicRead);
+            // 构造永久URL
+            String url = "https://" + BUCKET_NAME + "." + ENDPOINT + "/" + fileName;
+            return url;
+        } catch (IOException e) {
+            throw new GlobalException(new Result<>().error(BusinessFailCode.FILE_UPLOAD_ERROR).message("文件上传失败"));
+        } finally {
+            ossClient.shutdown();
+        }
+    }
+
+    @Override
+    public void updateCategory(KnowledgeCategory request) {
+        knowledgeCategoryService.updateById(request);
     }
 }

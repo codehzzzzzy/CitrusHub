@@ -26,6 +26,11 @@ public class KnowledgeCategory implements Serializable {
     private String categoryName;
 
     /**
+     * 图片
+     */
+    private String url;
+
+    /**
      * 分类描述
      */
     private String description;

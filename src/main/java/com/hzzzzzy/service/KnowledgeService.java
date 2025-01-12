@@ -79,4 +79,17 @@ public interface KnowledgeService {
      * @return
      */
     PageResult<KnowledgeBaseVO> searchKnowledge(Integer categoryId, String keyword, Integer current, Integer pageSize);
+
+    /**
+     * 上传分类图片
+     * @param file
+     * @return
+     */
+    String uploadCategoryImage(MultipartFile file);
+
+    /**
+     * 更新分类
+     * @param request
+     */
+    void updateCategory(KnowledgeCategory request);
 }

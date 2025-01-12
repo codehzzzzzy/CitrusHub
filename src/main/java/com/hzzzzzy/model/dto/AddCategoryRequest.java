@@ -20,4 +20,7 @@ public class AddCategoryRequest {
 
     @ApiModelProperty("分类描述")
     private String description;
+
+    @ApiModelProperty("图片url")
+    private String url;
 }
