@@ -1,7 +1,7 @@
 package com.hzzzzzy.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import generator.domain.Post;
+import com.hzzzzzy.model.entity.Post;
 import com.hzzzzzy.service.PostService;
 import com.hzzzzzy.mapper.PostMapper;
 import org.springframework.stereotype.Service;

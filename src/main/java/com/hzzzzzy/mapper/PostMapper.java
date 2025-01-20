@@ -1,7 +1,7 @@
 package com.hzzzzzy.mapper;
 
-import generator.domain.Post;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.hzzzzzy.model.entity.Post;
 
 /**
 * @author hzy

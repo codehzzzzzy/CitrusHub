@@ -1,7 +1,7 @@
 package com.hzzzzzy.service;
 
-import generator.domain.Post;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hzzzzzy.model.entity.Post;
 
 /**
 * @author hzy
