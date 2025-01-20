@@ -8,6 +8,7 @@
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="account" column="account" jdbcType="VARCHAR"/>
             <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
             <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
@@ -17,7 +18,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,account,password,
+        id,account,password,avatar,
         create_time,update_time,is_deleted,
         type,expertise,remark
     </sql>

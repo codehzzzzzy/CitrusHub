@@ -9,6 +9,7 @@ create table user
     id              int             auto_increment              PRIMARY KEY COMMENT '用户id',
     account         varchar(255)                                NOT NULL    COMMENT '账号',
     password        varchar(255)                                NOT NULL    COMMENT '密码',
+    avatar          varchar(255)    default 'https://hzzzzzy-typora.oss-cn-guangzhou.aliyuncs.com/images/202501201820579.jpg'  COMMENT '头像',
     create_time     datetime        default CURRENT_TIMESTAMP   NOT NULL    COMMENT '创建时间',
     update_time     datetime        default CURRENT_TIMESTAMP   NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     is_deleted      tinyint         default 0                   NOT NULL    COMMENT '是否删除（0:不删除;1:删除）',

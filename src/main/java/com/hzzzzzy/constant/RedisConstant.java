@@ -21,4 +21,19 @@ public interface RedisConstant {
      * 聊天历史记录key前缀
      */
     String CHAT_HISTORY_PREFIX = "chat:history:";
+
+    /**
+     * 帖子点赞key前缀
+     */
+    String POST_LIKE_KEY_PREFIX = "post:like:";
+
+    /**
+     * 帖子点赞去重key前缀
+     */
+    String POST_DEDUPLICATION_KEY_PREFIX = "post:deduplication:";
+
+    /**
+     * 帖子评论key前缀
+     */
+    String POST_COMMENT_KEY_PREFIX = "post:comment:";
 }

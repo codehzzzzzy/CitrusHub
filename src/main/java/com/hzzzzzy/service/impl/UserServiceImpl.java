@@ -2,6 +2,10 @@ package com.hzzzzzy.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
+import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.model.CannedAccessControlList;
+import com.aliyun.oss.model.PutObjectRequest;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -24,11 +28,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static com.hzzzzzy.config.OSSConfiguration.*;
 import static com.hzzzzzy.constant.CommonConstant.HEADER_TOKEN;
 import static com.hzzzzzy.constant.RedisConstant.USER_LOGIN_TOKEN;
 import static com.hzzzzzy.constant.RedisConstant.USER_LOGIN_TOKEN_EXPIRE;
@@ -118,8 +128,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public void alterPwd(HttpServletRequest request, String oldPassword, String newPassword, String verifyPassword) {
         String token = request.getHeader(HEADER_TOKEN);
-        String jsonUser = stringRedisTemplate.opsForValue().get(RedisConstant.USER_LOGIN_TOKEN + token);
-        User user = JSONUtil.toBean(jsonUser, User.class);
+        User user = getUser(request);
         if(!user.getPassword().equals(DigestUtils.md5DigestAsHex((SALT + oldPassword).getBytes()))){
             throw new GlobalException(new Result<>().error(BusinessFailCode.OLD_PASSWORD_ERROR));
         }
@@ -137,8 +146,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public void alterMsg(HttpServletRequest request, UserAltMsgRequest userAltMsgRequest) {
         String token = request.getHeader(HEADER_TOKEN);
-        String jsonUser = stringRedisTemplate.opsForValue().get(RedisConstant.USER_LOGIN_TOKEN + token);
-        User user = JSONUtil.toBean(jsonUser, User.class);
+        User user = getUser(request);
         // 判断type
         if (user.getType() != UserType.EXPERT.getValue()){
             throw new GlobalException(new Result<>().error(BusinessFailCode.PARAMETER_ERROR).message("用户类型不支持，只支持专家修改信息"));
@@ -173,5 +181,35 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         List<ExpertVO> voList = ListUtil.entity2VO(userList, ExpertVO.class);
         return PageUtil.getPage(voList, current, pageSize);
+    }
+
+    @Override
+    public void alterAvatar(HttpServletRequest request, MultipartFile file) {
+        User user = getUser(request);
+        // 获取文件名称
+        String fileName = file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf(".")) + user.getAccount() + new Date().getTime() + ".jpg";
+        // 创建OSSClient实例
+        OSS ossClient = new OSSClientBuilder().build(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
+        try {
+            // 创建上传请求
+            PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET_NAME, fileName, file.getInputStream());
+            ossClient.putObject(putObjectRequest);
+            ossClient.setObjectAcl(BUCKET_NAME, fileName, CannedAccessControlList.PublicRead);
+            // 构造永久URL
+            String url = "https://" + BUCKET_NAME + "." + ENDPOINT + "/" + fileName;
+            user.setAvatar(url);
+            this.updateById(user);
+        } catch (IOException e) {
+            throw new GlobalException(new Result<>().error(BusinessFailCode.FILE_UPLOAD_ERROR).message("文件上传失败"));
+        } finally {
+            ossClient.shutdown();
+        }
+    }
+
+    private User getUser(HttpServletRequest request) {
+        String token = request.getHeader(HEADER_TOKEN);
+        String jsonUser = stringRedisTemplate.opsForValue().get(RedisConstant.USER_LOGIN_TOKEN + token);
+        User user = JSONUtil.toBean(jsonUser, User.class);
+        return user;
     }
 }

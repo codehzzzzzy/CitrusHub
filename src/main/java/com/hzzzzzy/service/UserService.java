@@ -6,6 +6,7 @@ import com.hzzzzzy.model.entity.PageResult;
 import com.hzzzzzy.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hzzzzzy.model.vo.ExpertVO;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -69,4 +70,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     PageResult<ExpertVO> getExpertInfo(String expertise, Integer current, Integer pageSize);
+
+    /**
+     * 修改头像
+     * @param request
+     * @param file
+     */
+    void alterAvatar(HttpServletRequest request, MultipartFile file);
 }

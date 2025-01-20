@@ -16,6 +16,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotEmpty;
 
@@ -111,5 +113,17 @@ public class UserController {
     ){
         PageResult<ExpertVO> result = userService.getExpertInfo(expertise, current, pageSize);
         return new Result<>().success().message("获取专家信息成功").data(result);
+    }
+
+    @ApiOperation(value = "修改头像", tags = "用户管理")
+    @PostMapping("/alterAvatar")
+    public Result alterAvatar(
+            @RequestPart
+            @Parameter(description = "头像")
+            MultipartFile file,
+            HttpServletRequest request
+    ){
+        userService.alterAvatar(request, file);
+        return new Result<>().success().message("修改头像成功");
     }
 }

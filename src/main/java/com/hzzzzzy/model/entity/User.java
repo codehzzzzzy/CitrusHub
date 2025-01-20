@@ -37,6 +37,11 @@ public class User implements Serializable {
     private String password;
 
     /**
+     * 头像
+     */
+    private String avatar;
+
+    /**
      * 创建时间
      */
     private Date createTime;
