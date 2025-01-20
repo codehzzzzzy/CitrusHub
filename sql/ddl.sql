@@ -62,3 +62,25 @@ CREATE TABLE citrus_chat (
     `name`          varchar(255)                                NOT NULL    COMMENT '对话名称',
     thread_slug     varchar(255)                                NOT NULL    COMMENT '对话标识'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='大模型对话信息表';
+
+-- 帖子表
+CREATE TABLE post (
+    id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '帖子id',
+    user_id         int                                         NOT NULL    COMMENT '用户id',
+    title	        varchar(255)	                            NOT NULL    COMMENT '帖子标题',
+    context         text                                        NOT NULL    COMMENT '帖子内容',
+    create_time     datetime        default CURRENT_TIMESTAMP   NOT NULL    COMMENT '创建时间',
+    update_time     datetime        default CURRENT_TIMESTAMP   NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    is_deleted      tinyint         default 0                   NOT NULL    COMMENT '是否删除（0:不删除;1:删除）'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='帖子表';
+
+-- 评论表
+CREATE TABLE comment (
+    id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '评论id',
+    post_id         int                                         NOT NULL    COMMENT '帖子id',
+    user_id         int                                         NOT NULL    COMMENT '用户id',
+    context         text                                        NOT NULL    COMMENT '评论内容',
+    create_time     datetime        default CURRENT_TIMESTAMP   NOT NULL    COMMENT '创建时间',
+    update_time     datetime        default CURRENT_TIMESTAMP   NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    is_deleted      tinyint         default 0                   NOT NULL    COMMENT '是否删除（0:不删除;1:删除）'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='评论表';
