@@ -45,18 +45,18 @@ public class BaseExceptionHandler {
         return new Result<>().error(BusinessFailCode.PARAMETER_ERROR).message("参数验证异常");
     }
 
-    /**
-     * 拦截未捕获异常
-     */
-    @ExceptionHandler(value = Throwable.class)
-    public Result defaultErrorHandler(HttpServletRequest request, Throwable throwable) {
-        if(throwable.getMessage() != null){
-            log.error("[{}] {} [ex] {}", request.getMethod(), request.getRequestURL().toString(), throwable, throwable.getCause());
-            return new Result<>().error().message(throwable.getMessage());
-        }
-        log.error("[{}] {} ", request.getMethod(), getUrl(request), throwable);
-        return new Result<>().error().message("系统异常");
-    }
+//    /**
+//     * 拦截未捕获异常
+//     */
+//    @ExceptionHandler(value = Throwable.class)
+//    public Result defaultErrorHandler(HttpServletRequest request, Throwable throwable) {
+//        if(throwable.getMessage() != null){
+//            log.error("[{}] {} [ex] {}", request.getMethod(), request.getRequestURL().toString(), throwable, throwable.getCause());
+//            return new Result<>().error().message(throwable.getMessage());
+//        }
+//        log.error("[{}] {} ", request.getMethod(), getUrl(request), throwable);
+//        return new Result<>().error().message("系统异常");
+//    }
 
     private String getUrl(HttpServletRequest request) {
         if (StringUtils.isEmpty(request.getQueryString())) {

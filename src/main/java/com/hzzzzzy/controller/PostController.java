@@ -8,12 +8,14 @@ import com.hzzzzzy.model.entity.Result;
 import com.hzzzzzy.model.vo.PostDetailVO;
 import com.hzzzzzy.model.vo.PostVO;
 import com.hzzzzzy.service.PostCommonService;
+import com.hzzzzzy.service.PostRecommendationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author hzzzzzy
@@ -28,6 +30,8 @@ import javax.servlet.http.HttpServletRequest;
 public class PostController {
 
     private final PostCommonService postCommonService;
+
+    private final PostRecommendationService recommendationService;
 
     @ApiOperation(value = "创建帖子", tags = "帖子管理")
     @PostMapping("/createPost")
@@ -117,6 +121,17 @@ public class PostController {
         }
     }
 
+    @ApiOperation(value = "获取推荐帖子", tags = "帖子管理")
+    @GetMapping("/getRecommend")
+    public Result getRecommend(
+            @RequestParam("postId")
+            @Parameter(description = "帖子id")
+            Integer postId
+    ){
+        List<PostVO> voList = recommendationService.recommendPosts(postId);
+        return new Result<>().success().data(voList);
+    }
+
     @ApiOperation(value = "评论帖子", tags = "帖子管理")
     @PostMapping("/commentPost")
     public Result commentPost(
@@ -138,5 +153,7 @@ public class PostController {
         postCommonService.deleteComment(commentId);
         return new Result<>().success().message("删除成功");
     }
+
+
 
 }
