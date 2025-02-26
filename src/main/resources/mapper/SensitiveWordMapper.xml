@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzzzzzy.mapper.SensitiveWordMapper">
+
+    <resultMap id="BaseResultMap" type="com.hzzzzzy.model.entity.SensitiveWord">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="word" column="word" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,word
+    </sql>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT IGNORE INTO sensitive_word (word)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.word})
+        </foreach>
+    </insert>
+</mapper>

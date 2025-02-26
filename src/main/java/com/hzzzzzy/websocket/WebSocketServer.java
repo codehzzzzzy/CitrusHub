@@ -6,6 +6,7 @@ import com.hzzzzzy.exception.GlobalException;
 import com.hzzzzzy.model.dto.ChatMessage;
 import com.hzzzzzy.model.dto.Message;
 import com.hzzzzzy.model.entity.Result;
+import com.hzzzzzy.sensitive.ACFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ import static com.hzzzzzy.constant.RedisConstant.CHAT_HISTORY_PREFIX;
 @ServerEndpoint(value = "/websocket/{fromUserId}")
 @Component
 public class WebSocketServer {
+
+    @Autowired
+    private ACFilter acFilter;
 
     private static final Logger log = LoggerFactory.getLogger(WebSocketServer.class);
 
@@ -115,10 +119,10 @@ public class WebSocketServer {
             Integer toUserId = msg.getToUserId();
             String content = msg.getContent();
             String timestamp = LocalDateTime.now().format(FORMATTER);
-
+            // 过滤敏感消息
+            content = acFilter.filter(content);
             // 保存消息到Redis
             saveChatHistory(userId, toUserId, content, timestamp);
-
             // 获取目标用户的WebSocket连接并发送消息
             WebSocketServer target = WEBSOCKET_MAP.get(toUserId);
             if (target != null) {
