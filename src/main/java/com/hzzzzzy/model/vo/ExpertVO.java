@@ -19,4 +19,13 @@ public class ExpertVO {
 
     @ApiModelProperty("备注")
     String remark;
+
+    @ApiModelProperty("账号")
+    private String account;
+
+    @ApiModelProperty("头像")
+    private String avatar;
+
+    @ApiModelProperty("是否上线")
+    private Boolean isOnline;
 }

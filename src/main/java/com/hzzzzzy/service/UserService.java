@@ -64,12 +64,11 @@ public interface UserService extends IService<User> {
     /**
      * 获取所有专家信息
      *
-     * @param expertise
      * @param current
      * @param pageSize
      * @return
      */
-    PageResult<ExpertVO> getExpertInfo(String expertise, Integer current, Integer pageSize);
+    PageResult<ExpertVO> getExpertInfo(Integer current, Integer pageSize);
 
     /**
      * 修改头像

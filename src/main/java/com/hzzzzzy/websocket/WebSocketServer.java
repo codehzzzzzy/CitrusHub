@@ -6,7 +6,9 @@ import com.hzzzzzy.exception.GlobalException;
 import com.hzzzzzy.model.dto.ChatMessage;
 import com.hzzzzzy.model.dto.Message;
 import com.hzzzzzy.model.entity.Result;
+import com.hzzzzzy.model.entity.User;
 import com.hzzzzzy.sensitive.ACFilter;
+import com.hzzzzzy.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,10 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+
 import static com.hzzzzzy.constant.RedisConstant.CHAT_HISTORY_PREFIX;
 
 /**
@@ -29,9 +34,6 @@ import static com.hzzzzzy.constant.RedisConstant.CHAT_HISTORY_PREFIX;
 @ServerEndpoint(value = "/websocket/{fromUserId}")
 @Component
 public class WebSocketServer {
-
-    @Autowired
-    private ACFilter acFilter;
 
     private static final Logger log = LoggerFactory.getLogger(WebSocketServer.class);
 
@@ -60,10 +62,18 @@ public class WebSocketServer {
      */
     private static StringRedisTemplate redisTemplate;
 
+    private static ACFilter acFilter;
+
     @Autowired
     public void setRedisTemplate(StringRedisTemplate redisTemplate) {
         WebSocketServer.redisTemplate = redisTemplate;
     }
+
+    @Autowired
+    public void setAcFilter(ACFilter acFilter) {
+        WebSocketServer.acFilter = acFilter;
+    }
+
 
     /**
      * 连接建立成功调用的方法
@@ -128,12 +138,16 @@ public class WebSocketServer {
             if (target != null) {
                 target.sendMessage(content);
             } else {
-                sendMessage("用户不存在或不在线");
+                sendMessage("对方已下线");
             }
         } catch (Exception e) {
             log.error("处理消息时发生错误: {}", e.getMessage());
             sendMessage("消息格式错误");
         }
+    }
+
+    public List<Integer> getOnline(){
+        return new ArrayList<>(WEBSOCKET_MAP.keySet());
     }
 
     private void saveChatHistory(Integer fromUserId, Integer toUserId, String content, String timestamp) {

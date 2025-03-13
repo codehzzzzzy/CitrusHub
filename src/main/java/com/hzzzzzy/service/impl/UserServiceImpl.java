@@ -23,8 +23,9 @@ import com.hzzzzzy.service.UserService;
 import com.hzzzzzy.mapper.UserMapper;
 import com.hzzzzzy.utils.JwtUtil;
 import com.hzzzzzy.utils.ListUtil;
-import com.hzzzzzy.utils.PageUtil;
+import com.hzzzzzy.websocket.WebSocketServer;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -42,6 +43,7 @@ import static com.hzzzzzy.config.OSSConfiguration.*;
 import static com.hzzzzzy.constant.CommonConstant.HEADER_TOKEN;
 import static com.hzzzzzy.constant.RedisConstant.USER_LOGIN_TOKEN;
 import static com.hzzzzzy.constant.RedisConstant.USER_LOGIN_TOKEN_EXPIRE;
+import static com.hzzzzzy.utils.PageUtil.getPage;
 
 /**
 * @author hzzzzzy
@@ -56,6 +58,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+    @Resource
+    @Lazy
+    private WebSocketServer webSocketServer;
 
     @Override
     public void register(UserRegisterRequest userRegisterRequest) {
@@ -172,16 +177,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public PageResult<ExpertVO> getExpertInfo(String expertise, Integer current, Integer pageSize) {
+    public PageResult<ExpertVO> getExpertInfo(Integer current, Integer pageSize) {
         List<User> userList = this.list(new LambdaQueryWrapper<User>()
                 .eq(User::getType, UserType.EXPERT.getValue())
-                .like(!StringUtils.isEmpty(expertise), User::getExpertise, expertise)
         );
         if (userList.isEmpty()){
             return null;
         }
         List<ExpertVO> voList = ListUtil.entity2VO(userList, ExpertVO.class);
-        return PageUtil.getPage(voList, current, pageSize);
+        List<Integer> onlineIdList = webSocketServer.getOnline();
+        voList.forEach(vo -> {
+            if (onlineIdList.contains(vo.getId())){
+                vo.setIsOnline(true);
+            }else {
+                vo.setIsOnline(false);
+            }
+        });
+        return getPage(voList, current, pageSize);
     }
 
     @Override

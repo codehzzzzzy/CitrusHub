@@ -58,11 +58,6 @@ public class CitrusSupplyDemand implements Serializable {
     private Integer requireTimeAfter;
 
     /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
      * 图片链接
      */
     private String imageUrl;

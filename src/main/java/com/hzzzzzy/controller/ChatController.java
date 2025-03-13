@@ -41,7 +41,7 @@ public class ChatController {
     @GetMapping("getChatHistory/{toUserId}")
     public Result getChatHistory(
             @PathVariable("toUserId")
-            @Parameter(description = "专家id")
+            @Parameter(description = "对方的id")
                     Integer toUserId,
             HttpServletRequest request
     ) {

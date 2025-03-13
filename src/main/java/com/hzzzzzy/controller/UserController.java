@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 /**
  * @author hzzzzzy
@@ -101,9 +102,6 @@ public class UserController {
     @ApiOperation(value = "获取所有专家信息", tags = "用户管理")
     @GetMapping("/getExpertInfo")
     public Result getExpertInfo(
-            @RequestParam(value = "expertise", required = false)
-            @Parameter(description = "专业领域（可空）")
-            String expertise,
             @RequestParam("current")
             @Parameter(description = "当前页")
             Integer current,
@@ -111,7 +109,7 @@ public class UserController {
             @Parameter(description = "页容量")
             Integer pageSize
     ){
-        PageResult<ExpertVO> result = userService.getExpertInfo(expertise, current, pageSize);
+        PageResult<ExpertVO> result = userService.getExpertInfo(current, pageSize);
         return new Result<>().success().message("获取专家信息成功").data(result);
     }
 
