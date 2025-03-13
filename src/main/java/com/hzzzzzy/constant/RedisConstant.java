@@ -36,4 +36,19 @@ public interface RedisConstant {
      * 帖子评论key前缀
      */
     String POST_COMMENT_KEY_PREFIX = "post:comment:";
+
+    /**
+     * 活跃用户key前缀
+     */
+    String ACTIVE_USER = "active:user:";
+
+    /**
+     * 总点赞数key
+     */
+    String TOTAL_LIKE_COUNT_KEY = "total:like:count";
+
+    /**
+     * 分类名称key前缀
+     */
+    String CATEGORY_NAME_KEY_PREFIX = "category:name:";
 }

@@ -70,19 +70,6 @@ CREATE TABLE sensitive_word (
     word            varchar(255)                                NOT NULL    COMMENT '敏感词'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='敏感词表';
 
--- 帖子表
-CREATE TABLE post (
-    id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '帖子id',
-    user_id         int                                         NOT NULL    COMMENT '用户id',
-    title	        varchar(255)	                            NOT NULL    COMMENT '帖子标题',
-    context         text                                        NOT NULL    COMMENT '帖子内容',
-    image_id	    varchar(255)	                            NOT NULL    COMMENT '图片id（eg:1;2;3）',
-    create_time     datetime        default CURRENT_TIMESTAMP   NOT NULL    COMMENT '创建时间',
-    update_time     datetime        default CURRENT_TIMESTAMP   NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    is_deleted      tinyint         default 0                   NOT NULL    COMMENT '是否删除（0:不删除;1:删除）',
-    status          tinyint         default 1                   NOT NULL    COMMENT '帖子状态（0:已下架;1:正常）'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='帖子表';
-
 -- 帖子图片表
 CREATE TABLE image (
     id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '帖子图片id',
@@ -107,7 +94,7 @@ CREATE TABLE reports (
     reporter_id     int                                         NOT NULL    COMMENT '举报人id',
     reason          text                                        NOT NULL    COMMENT '举报理由',
     object_id       int                                         NOT NULL    COMMENT '举报对象id',
-    object_type     tinyint                                     NOT NULL    COMMENT '举报对象类型（1:用户;2:评论;3:帖子）',
+    object_type     tinyint                                     NOT NULL    COMMENT '举报对象类型（1:评论;2:帖子）',
     status          tinyint         default 1                   NOT NULL    COMMENT '举报状态（1:待处理;2:已处理）',
     create_time     datetime        default CURRENT_TIMESTAMP   NOT NULL    COMMENT '举报时间',
     result          varchar(255)                                            COMMENT '处理结果'
@@ -119,18 +106,9 @@ CREATE TABLE post (
     user_id         int                                         NOT NULL    COMMENT '用户id',
     title	        varchar(255)	                            NOT NULL    COMMENT '帖子标题',
     context         text                                        NOT NULL    COMMENT '帖子内容',
+    image_id	    varchar(255)	                            NOT NULL    COMMENT '图片id（eg:1;2;3）',
     create_time     datetime        default CURRENT_TIMESTAMP   NOT NULL    COMMENT '创建时间',
     update_time     datetime        default CURRENT_TIMESTAMP   NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    is_deleted      tinyint         default 0                   NOT NULL    COMMENT '是否删除（0:不删除;1:删除）'
+    is_deleted      tinyint         default 0                   NOT NULL    COMMENT '是否删除（0:不删除;1:删除）',
+    status          tinyint         default 1                   NOT NULL    COMMENT '帖子状态（0:已下架;1:正常）'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='帖子表';
-
--- 评论表
-CREATE TABLE comment (
-    id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '评论id',
-    post_id         int                                         NOT NULL    COMMENT '帖子id',
-    user_id         int                                         NOT NULL    COMMENT '用户id',
-    context         text                                        NOT NULL    COMMENT '评论内容',
-    create_time     datetime        default CURRENT_TIMESTAMP   NOT NULL    COMMENT '创建时间',
-    update_time     datetime        default CURRENT_TIMESTAMP   NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    is_deleted      tinyint         default 0                   NOT NULL    COMMENT '是否删除（0:不删除;1:删除）'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='评论表';

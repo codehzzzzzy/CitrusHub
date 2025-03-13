@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author hzzzzzy
@@ -44,7 +45,7 @@ public class LLMController {
             @PathVariable("name")
             String name,
             HttpServletRequest request
-    ) {
+    ) throws ExecutionException, InterruptedException {
         String threadSlug = chatService.createChat(name, request);
         return new Result<>().success().message("创建成功").data(threadSlug);
     }

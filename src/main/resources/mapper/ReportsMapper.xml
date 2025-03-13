@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzzzzzy.mapper.ReportsMapper">
+
+    <resultMap id="BaseResultMap" type="com.hzzzzzy.model.entity.Reports">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="reporterId" column="reporter_id" jdbcType="INTEGER"/>
+            <result property="reason" column="reason" jdbcType="VARCHAR"/>
+            <result property="objectId" column="object_id" jdbcType="INTEGER"/>
+            <result property="objectType" column="object_type" jdbcType="TINYINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,reporter_id,reason,create_time
+        object_id,object_type,status
+    </sql>
+</mapper>

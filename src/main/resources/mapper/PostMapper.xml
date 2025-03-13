@@ -5,17 +5,20 @@
 <mapper namespace="com.hzzzzzy.mapper.PostMapper">
 
     <resultMap id="BaseResultMap" type="com.hzzzzzy.model.entity.Post">
-            <id property="id" column="id" />
-            <result property="userId" column="user_id" />
-            <result property="title" column="title" />
-            <result property="context" column="context" />
-            <result property="createTime" column="create_time" />
-            <result property="updateTime" column="update_time" />
-            <result property="isDeleted" column="is_deleted" />
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="context" column="context" jdbcType="VARCHAR"/>
+            <result property="imageId" column="image_id" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,title,context,create_time,update_time,
-        is_deleted
+        id,user_id,title,image_id,
+        context,create_time,update_time,
+        is_deleted,status
     </sql>
 </mapper>

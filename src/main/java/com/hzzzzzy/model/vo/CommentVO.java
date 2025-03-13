@@ -1,7 +1,5 @@
 package com.hzzzzzy.model.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -21,9 +19,6 @@ public class CommentVO {
 
     @ApiModelProperty("帖子id")
     private Integer postId;
-
-    @ApiModelProperty("用户账号")
-    private String account;
 
     @ApiModelProperty("用户头像")
     private String avatar;

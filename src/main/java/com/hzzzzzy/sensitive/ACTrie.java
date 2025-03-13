@@ -6,7 +6,7 @@ public class ACTrie {
 
     private final static char MASK = '*'; // 替代字符
 
-    private  Word  root;
+    private Word  root;
 
     static class Word{
         // 判断是否是敏感词结尾
@@ -25,15 +25,11 @@ public class ACTrie {
     public void createACTrie(List<String> list){
         Word currentNode = new Word();
         root=currentNode;
-        for(String key : list)
-        {
+        for(String key : list) {
             currentNode=root;
-            for(int j=0;j<key.length();j++)
-            {
+            for(int j=0;j<key.length();j++) {
                 if(currentNode.next!=null&&currentNode.next.containsKey(key.charAt(j))){
                     currentNode= currentNode.next.get(key.charAt(j));
-                    // 防止乱序输入改变end,比如da，dadac，dadac先进入，第二个a为false,da进入后把a设置为true
-                    // 这样结果就是a是end，c也是end
                     if(j==key.length()-1){
                         currentNode.end=true;
                     }
@@ -50,8 +46,9 @@ public class ACTrie {
         }
         initFailOver();
     }
+
     // 初始化匹配失败回调节点/状态
-    public  void initFailOver(){
+    public void initFailOver(){
         Queue<Word> queue=new LinkedList<>();
         Map<Character,Word> children=root.next;
         for(Word node:children.values())
@@ -78,9 +75,9 @@ public class ACTrie {
             }
         }
     }
+
     // 匹配
-    public  String match(String matchWord)
-    {
+    public  String match(String matchWord) {
         Word walkNode = root;
         char[] wordArray = matchWord.toCharArray();
         for (int i = 0; i < wordArray.length; i++) {

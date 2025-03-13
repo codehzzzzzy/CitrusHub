@@ -6,6 +6,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author hzzzzzy
@@ -27,7 +28,7 @@ public interface ChatService {
      * @param request
      * @return
      */
-    String createChat(String name, HttpServletRequest request);
+    String createChat(String name, HttpServletRequest request) throws ExecutionException, InterruptedException;
 
     /**
      * 删除对话

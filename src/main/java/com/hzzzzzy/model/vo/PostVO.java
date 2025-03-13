@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author hzzzzzy
@@ -17,9 +18,6 @@ public class PostVO {
     @ApiModelProperty("帖子id")
     private Integer id;
 
-    @ApiModelProperty("用户账号")
-    private String account;
-
     @ApiModelProperty("用户头像")
     private String avatar;
 
@@ -28,6 +26,12 @@ public class PostVO {
 
     @ApiModelProperty("帖子内容")
     private String context;
+
+    @ApiModelProperty("作者id")
+    private Integer authorId;
+
+    @ApiModelProperty("帖子图片url列表")
+    private List<String> urlList;
 
     @ApiModelProperty("创建时间")
     @JsonFormat(pattern = "yyyy年MM月dd日 HH时mm分ss秒", timezone = "GMT+8")
@@ -42,4 +46,7 @@ public class PostVO {
 
     @ApiModelProperty("评论数")
     private Long commentCount;
+
+    @ApiModelProperty("是否已点赞")
+    private Boolean isLiked;
 }

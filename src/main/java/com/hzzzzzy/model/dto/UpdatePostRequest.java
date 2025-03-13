@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author hzzzzzy
  * @date 2025/1/14
@@ -21,4 +23,7 @@ public class UpdatePostRequest {
 
     @ApiModelProperty("帖子内容")
     private String context;
+
+    @ApiModelProperty("图片id列表")
+    private List<Integer> imageIdList;
 }

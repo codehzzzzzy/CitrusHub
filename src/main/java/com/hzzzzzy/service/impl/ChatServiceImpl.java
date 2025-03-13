@@ -29,6 +29,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import static com.hzzzzzy.config.LLMConfiguration.*;
 import static com.hzzzzzy.constant.CommonConstant.HEADER_TOKEN;
@@ -88,7 +89,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public String createChat(String name, HttpServletRequest request) {
+    public String createChat(String name, HttpServletRequest request) throws ExecutionException, InterruptedException {
         String token = request.getHeader(HEADER_TOKEN);
         String jsonUser = redisTemplate.opsForValue().get(RedisConstant.USER_LOGIN_TOKEN + token);
         User user = JSONUtil.toBean(jsonUser, User.class);
@@ -117,15 +118,16 @@ public class ChatServiceImpl implements ChatService {
                 chatService.save(entity);
                 return threadSlug;
             } else {
+                log.info(response.body());
                 throw new GlobalException(new Result<>().error(BusinessFailCode.REMOTE_CALL_ERROR).message("创建对话失败"));
             }
         });
         // 异步等待任务执行完成并返回结果
-        try {
+//        try {
             return future.get();
-        } catch (Exception e) {
-            throw new GlobalException(new Result<>().error(BusinessFailCode.REMOTE_CALL_ERROR).message("创建对话失败"));
-        }
+//        } catch (Exception e) {
+//            throw new GlobalException(new Result<>().error(BusinessFailCode.REMOTE_CALL_ERROR).message("创建对话失败"));
+//        }
     }
 
     @Override
