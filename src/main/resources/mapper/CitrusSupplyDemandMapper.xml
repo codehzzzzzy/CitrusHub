@@ -14,10 +14,12 @@
             <result property="requireTimePre" column="require_time_pre" jdbcType="INTEGER"/>
             <result property="requireTimeAfter" column="require_time_after" jdbcType="INTEGER"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="imageUrl" column="image_url" jdbcType="VARCHAR"/>
+            <result property="url" column="url" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,title,type,category,
-        region,release_date,require_time_pre,require_time_after,create_time
+        region,release_date,require_time_pre,require_time_after,create_time,imageUrl,url
     </sql>
 </mapper>

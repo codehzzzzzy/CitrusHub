@@ -46,7 +46,9 @@ CREATE TABLE citrus_supply_demand (
     region          varchar(255)                                NOT NULL    COMMENT '地区',
     release_date    varchar(255)                                NOT NULL    COMMENT '发布日期 mm-dd',
     require_time_pre    int                                     NOT NULL    COMMENT '需求日期-前',
-    require_time_after  int                                     NOT NULL    COMMENT '需求日期-后'
+    require_time_after  int                                     NOT NULL    COMMENT '需求日期-后',
+    image_url       varchar(255)                                NOT NULL    COMMENT '图片链接',
+    url             varchar(255)                                NOT NULL    COMMENT '跳转链接'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='供需信息表';
 
 -- 资讯信息

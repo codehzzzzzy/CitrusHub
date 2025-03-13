@@ -62,6 +62,16 @@ public class CitrusSupplyDemand implements Serializable {
      */
     private Date createTime;
 
+    /**
+     * 图片链接
+     */
+    private String imageUrl;
+
+    /**
+     * 跳转链接
+     */
+    private String url;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

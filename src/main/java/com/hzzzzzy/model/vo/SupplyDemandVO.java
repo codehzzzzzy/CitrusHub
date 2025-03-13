@@ -31,4 +31,10 @@ public class SupplyDemandVO {
 
     @ApiModelProperty("需求日期-后")
     private Integer requireTimeAfter;
+
+    @ApiModelProperty("图片链接")
+    private String imageUrl;
+
+    @ApiModelProperty("跳转链接")
+    private String url;
 }
