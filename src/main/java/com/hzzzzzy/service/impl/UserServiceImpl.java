@@ -147,14 +147,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public void alterMsg(HttpServletRequest request, UserAltMsgRequest userAltMsgRequest) {
         String token = request.getHeader(HEADER_TOKEN);
         User user = getUser(request);
+        User newUser = this.getById(user.getId());
         // 判断type
-        if (user.getType() != UserType.EXPERT.getValue()){
+        if (newUser.getType() != UserType.EXPERT.getValue()){
             throw new GlobalException(new Result<>().error(BusinessFailCode.PARAMETER_ERROR).message("用户类型不支持，只支持专家修改信息"));
         }
-        user.setRemark(userAltMsgRequest.getRemark());
-        user.setExpertise(userAltMsgRequest.getExpertise());
-        this.updateById(user);
-        stringRedisTemplate.opsForValue().set(RedisConstant.USER_LOGIN_TOKEN + token, JSONUtil.toJsonStr(user),USER_LOGIN_TOKEN_EXPIRE, TimeUnit.SECONDS);
+        newUser.setRemark(userAltMsgRequest.getRemark());
+        newUser.setExpertise(userAltMsgRequest.getExpertise());
+        this.updateById(newUser);
+        stringRedisTemplate.opsForValue().set(RedisConstant.USER_LOGIN_TOKEN + token, JSONUtil.toJsonStr(newUser),USER_LOGIN_TOKEN_EXPIRE, TimeUnit.SECONDS);
     }
 
     @Override
@@ -186,8 +187,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public void alterAvatar(HttpServletRequest request, MultipartFile file) {
         User user = getUser(request);
+        User newUser = this.getById(user.getId());
         // 获取文件名称
-        String fileName = file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf(".")) + user.getAccount() + new Date().getTime() + ".jpg";
+        String fileName = file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf(".")) + newUser.getAccount() + new Date().getTime() + ".jpg";
         // 创建OSSClient实例
         OSS ossClient = new OSSClientBuilder().build(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
         try {
@@ -197,8 +199,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             ossClient.setObjectAcl(BUCKET_NAME, fileName, CannedAccessControlList.PublicRead);
             // 构造永久URL
             String url = "https://" + BUCKET_NAME + "." + ENDPOINT + "/" + fileName;
-            user.setAvatar(url);
-            this.updateById(user);
+            newUser.setAvatar(url);
+            this.updateById(newUser);
         } catch (IOException e) {
             throw new GlobalException(new Result<>().error(BusinessFailCode.FILE_UPLOAD_ERROR).message("文件上传失败"));
         } finally {
