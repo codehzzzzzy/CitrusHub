@@ -2,6 +2,8 @@ package com.hzzzzzy.controller;
 
 import com.hzzzzzy.model.dto.GetPriceRequest;
 import com.hzzzzzy.model.dto.SearchSupplyDemandRequest;
+import com.hzzzzzy.model.entity.CitrusNews;
+import com.hzzzzzy.model.entity.CitrusPrice;
 import com.hzzzzzy.model.entity.PageResult;
 import com.hzzzzzy.model.entity.Result;
 import com.hzzzzzy.model.vo.NewsVO;
@@ -59,19 +61,22 @@ public class CrawlController {
             @RequestBody
             GetPriceRequest request
     ) {
-        List<PriceVO> voList = crawlService.getPrice(request);
-        return new Result<>().success().message("获取成功").data(voList);
+        PageResult<CitrusPrice> res = crawlService.getPrice(request);
+        return new Result<>().success().message("获取成功").data(res);
     }
 
     @ApiOperation(value = "获取新闻信息", tags = "爬虫信息管理")
-    @GetMapping("getNews/{current}")
+    @GetMapping("getNews")
     public Result getNews(
-            @PathVariable("current")
+            @RequestParam("current")
             @Parameter(description = "当前页")
-            Integer current
+                    Integer current,
+            @RequestParam("pageSize")
+            @Parameter(description = "页容量")
+                    Integer pageSize
     ) {
-        List<NewsVO> newsList = crawlService.getNews(current);
-        return new Result<>().success().message("获取成功").data(newsList);
+        PageResult<CitrusNews> res = crawlService.getNews(current, pageSize);
+        return new Result<>().success().message("获取成功").data(res);
     }
 
 }

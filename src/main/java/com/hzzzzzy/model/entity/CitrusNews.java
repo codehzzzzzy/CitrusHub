@@ -11,11 +11,11 @@ import lombok.Data;
 
 /**
  * 价格信息表
- * @TableName citrus_price
+ * @TableName citrus_news
  */
-@TableName(value ="citrus_price")
+@TableName(value ="citrus_news")
 @Data
-public class CitrusPrice implements Serializable {
+public class CitrusNews implements Serializable {
     /**
      * 价格信息id
      */
@@ -23,29 +23,19 @@ public class CitrusPrice implements Serializable {
     private Integer id;
 
     /**
-     * 时间
+     * 日期
      */
     private Date date;
 
     /**
-     * 种类
+     * 新闻标题
      */
-    private String category;
+    private String title;
 
     /**
-     * 地区
+     * 新闻链接
      */
-    private String region;
-
-    /**
-     * 价格
-     */
-    private String price;
-
-    /**
-     * 升降
-     */
-    private String lift;
+    private String url;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

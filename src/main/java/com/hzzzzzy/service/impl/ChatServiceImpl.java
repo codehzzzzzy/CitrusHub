@@ -13,8 +13,10 @@ import com.hzzzzzy.model.dto.ChatRequest;
 import com.hzzzzzy.model.entity.CitrusChat;
 import com.hzzzzzy.model.entity.Result;
 import com.hzzzzzy.model.entity.User;
+import com.hzzzzzy.model.vo.ChatNameVO;
 import com.hzzzzzy.service.ChatService;
 import com.hzzzzzy.service.CitrusChatService;
+import com.hzzzzzy.utils.ListUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
+
 import static com.hzzzzzy.config.LLMConfiguration.*;
 import static com.hzzzzzy.constant.CommonConstant.HEADER_TOKEN;
 
@@ -148,7 +150,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public List<String> getChatNames(HttpServletRequest request) {
+    public List<ChatNameVO> getChatNames(HttpServletRequest request) {
         String token = request.getHeader(HEADER_TOKEN);
         String jsonUser = redisTemplate.opsForValue().get(RedisConstant.USER_LOGIN_TOKEN + token);
         User user = JSONUtil.toBean(jsonUser, User.class);
@@ -157,7 +159,7 @@ public class ChatServiceImpl implements ChatService {
         if (list.isEmpty()){
             return null;
         }
-        return list.stream().map(CitrusChat::getName).collect(Collectors.toList());
+        return ListUtil.entity2VO(list, ChatNameVO.class);
     }
 
     @Override

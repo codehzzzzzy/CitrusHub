@@ -2,10 +2,9 @@ package com.hzzzzzy.service;
 
 
 import com.hzzzzzy.model.dto.GetPriceRequest;
-import com.hzzzzzy.model.vo.NewsVO;
-import com.hzzzzzy.model.vo.PriceVO;
-
-import java.util.List;
+import com.hzzzzzy.model.entity.CitrusNews;
+import com.hzzzzzy.model.entity.CitrusPrice;
+import com.hzzzzzy.model.entity.PageResult;
 
 /**
  * @author hzzzzzy
@@ -19,12 +18,13 @@ public interface CrawlService {
      * @param request
      * @return
      */
-    List<PriceVO> getPrice(GetPriceRequest request);
+    PageResult<CitrusPrice> getPrice(GetPriceRequest request);
 
     /**
      * 获取新闻信息
      * @param current
+     * @param pageSize
      * @return
      */
-    List<NewsVO> getNews(Integer current);
+    PageResult<CitrusNews> getNews(Integer current, Integer pageSize);
 }

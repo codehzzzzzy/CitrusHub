@@ -2,6 +2,7 @@ package com.hzzzzzy.service;
 
 import com.hzzzzzy.model.dto.ChatHistoryResponse;
 import com.hzzzzzy.model.dto.ChatRequest;
+import com.hzzzzzy.model.vo.ChatNameVO;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,7 @@ public interface ChatService {
      * @return
      * @param request
      */
-    List<String> getChatNames(HttpServletRequest request);
+    List<ChatNameVO> getChatNames(HttpServletRequest request);
 
     /**
      * 获取一个对话下的所有聊天

@@ -51,13 +51,6 @@ CREATE TABLE citrus_supply_demand (
     url             varchar(255)                                NOT NULL    COMMENT '跳转链接'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='供需信息表';
 
--- 资讯信息
-CREATE TABLE citrus_consultation (
-    id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '资讯信息id',
-    title           varchar(255)                                NOT NULL    COMMENT '标题',
-    context         varchar(255)                                NOT NULL    COMMENT '内容'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='资讯信息表';
-
 -- 大模型对话信息表
 CREATE TABLE citrus_chat (
     id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '对话id',
@@ -114,3 +107,21 @@ CREATE TABLE post (
     is_deleted      tinyint         default 0                   NOT NULL    COMMENT '是否删除（0:不删除;1:删除）',
     status          tinyint         default 1                   NOT NULL    COMMENT '帖子状态（0:已下架;1:正常）'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='帖子表';
+
+-- 价格信息表
+CREATE TABLE citrus_price (
+    id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '价格信息id',
+    `date`          varchar(255)                                NOT NULL    COMMENT '时间',
+    category        varchar(255)                                NOT NULL    COMMENT '种类',
+    region          varchar(255)                                NOT NULL    COMMENT '地区',
+    price           varchar(255)                                NOT NULL    COMMENT '价格',
+    lift            varchar(255)                                NULL        COMMENT '升降'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='价格信息表';
+
+-- 价格信息表
+CREATE TABLE citrus_news (
+    id              int         AUTO_INCREMENT                  PRIMARY KEY COMMENT '价格信息id',
+    `date`          varchar(255)                                NOT NULL    COMMENT '日期',
+    title           varchar(255)                                NOT NULL    COMMENT '新闻标题',
+    url             varchar(255)                                NOT NULL    COMMENT '新闻链接'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='价格信息表';

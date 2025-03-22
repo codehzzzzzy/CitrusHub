@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzzzzzy.mapper.CitrusNewsMapper">
+
+    <resultMap id="BaseResultMap" type="com.hzzzzzy.model.entity.CitrusNews">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="date" column="date" jdbcType="TIMESTAMP"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="url" column="url" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,date,title,
+        url
+    </sql>
+</mapper>

@@ -15,12 +15,15 @@ import lombok.NoArgsConstructor;
 @ApiModel("获取价格信息请求")
 public class GetPriceRequest {
 
-    @ApiModelProperty("当前页（默认1，最大5）")
+    @ApiModelProperty(value = "当前页", required = true)
     Integer current;
 
-    @ApiModelProperty("地区（默认不限）")
+    @ApiModelProperty(value = "页容量", required = true)
+    Integer size;
+
+    @ApiModelProperty("地区")
     String region;
 
-    @ApiModelProperty("种类（默认不限）")
+    @ApiModelProperty("种类")
     String category;
 }

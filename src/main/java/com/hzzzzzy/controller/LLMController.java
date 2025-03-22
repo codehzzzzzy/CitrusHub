@@ -3,6 +3,7 @@ package com.hzzzzzy.controller;
 import com.hzzzzzy.model.dto.ChatHistoryResponse;
 import com.hzzzzzy.model.dto.ChatRequest;
 import com.hzzzzzy.model.entity.Result;
+import com.hzzzzzy.model.vo.ChatNameVO;
 import com.hzzzzzy.service.ChatService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -60,7 +61,7 @@ public class LLMController {
     @ApiOperation(value = "获取所有对话名称", tags = "大模型对话管理")
     @GetMapping("getChatNames")
     public Result getChatNames(HttpServletRequest request) {
-        List<String> chatNames = chatService.getChatNames(request);
+        List<ChatNameVO> chatNames = chatService.getChatNames(request);
         return new Result<>().success().data(chatNames);
     }
 

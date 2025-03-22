@@ -35,7 +35,7 @@ import static com.hzzzzzy.constant.CommonConstant.SUPPLY;
  */
 @Component
 @Slf4j
-public class CrawlJob implements ApplicationRunner {
+public class CrawlSupplyAndDemandJob implements ApplicationRunner {
 
     @Autowired
     private CitrusSupplyDemandService citrusSupplyDemandService;
